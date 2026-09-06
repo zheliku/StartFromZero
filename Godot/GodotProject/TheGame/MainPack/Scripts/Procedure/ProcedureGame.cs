@@ -37,8 +37,19 @@ public class ProcedureGame : ProcedureBase
 
         // await GF.UI.OpenUIFormAsync<MenuForm>(UIFormId.MenuForm);
 
-        // 主菜单已打开，收掉加载遮罩（遮罩由 ProcedurePrelode 打开并保持到此）
-        // LoadingForm.Current?.CloseLoading();
+        Log.Info("ProcedureGame OnEnter：进入游戏流程");
+
+        try
+        {
+            var menuForm = await GF.UI.OpenUIFormAsync<MenuForm>(UIFormId.MenuForm);
+            Log.Info("MenuForm 打开{0}", menuForm != null ? "成功" : "失败");
+        }
+        finally
+        {
+            // 主菜单已打开，收掉加载遮罩（遮罩由 ProcedurePrelode 打开并保持到此）；
+            // 放 finally 中，MenuForm 打开失败时也能收掉遮罩，避免卡死在加载页
+            LoadingForm.Current?.CloseLoading();
+        }
     }
 
     /// <summary>

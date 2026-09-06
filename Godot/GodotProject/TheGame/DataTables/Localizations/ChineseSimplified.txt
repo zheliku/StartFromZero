@@ -3,14 +3,14 @@
 ##type	int	string	string
 ##group			
 ##	index	键	值
-	1	MonsterSurviver	怪物幸存者
-	2	MoveRule	WASD移动角色
-	3	StartGame	开始游戏
-	4	MainForm.Score	分数:
-	5	MainForm.Timer	计时:
-	6	SettingForm.Setting	设置
-	7	SettingForm.Music	音乐
-	8	SettingForm.Effect	音效
+	1	MenuForm.GameName	怪物幸存者
+	2	MenuForm.ExitGame	退出游戏
+	3	MenuForm.StartGame	开始游戏
+	4	MenuForm.Setting	设置
+	5	SettingForm.Music	音乐：
+	6	SettingForm.Effect	音效：
+	7	SettingForm.Language	语言：
+	8	SettingForm.Close	关闭
 			
 			
 			

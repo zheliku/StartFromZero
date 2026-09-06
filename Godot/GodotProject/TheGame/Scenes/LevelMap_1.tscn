@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://dvttsg8wemfor"]
+
+[ext_resource type="Texture2D" uid="uid://ce4v8hoo0674y" path="res://TheGame/Sprites/Stage/back_grass_darkest.png" id="1_8d378"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ucit4"]
+a = Vector2(-1536, 1536)
+b = Vector2(1536, 1536)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_8d378"]
+a = Vector2(-1536, 1536)
+b = Vector2(-1536, -1536)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_pkq8o"]
+a = Vector2(-1536, -1536)
+b = Vector2(1536, -1536)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ql6y1"]
+a = Vector2(1536, 1536)
+b = Vector2(1536, -1536)
+
+[node name="LevelMap_1" type="Node2D" unique_id=499568142]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=796539646]
+texture = ExtResource("1_8d378")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=52521628]
+position = Vector2(1024, 0)
+texture = ExtResource("1_8d378")
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1686085947]
+position = Vector2(1024, 1024)
+texture = ExtResource("1_8d378")
+
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=897408627]
+position = Vector2(0, 1024)
+texture = ExtResource("1_8d378")
+
+[node name="Sprite2D5" type="Sprite2D" parent="." unique_id=1159019588]
+position = Vector2(-1024, 1024)
+texture = ExtResource("1_8d378")
+
+[node name="Sprite2D6" type="Sprite2D" parent="." unique_id=1873611539]
+position = Vector2(-1024, 0)
+texture = ExtResource("1_8d378")
+
+[node name="Sprite2D7" type="Sprite2D" parent="." unique_id=1956319691]
+position = Vector2(-1024, -1024)
+texture = ExtResource("1_8d378")
+
+[node name="Sprite2D8" type="Sprite2D" parent="." unique_id=2016425498]
+position = Vector2(0, -1024)
+texture = ExtResource("1_8d378")
+
+[node name="Sprite2D9" type="Sprite2D" parent="." unique_id=939753816]
+position = Vector2(1024, -1024)
+texture = ExtResource("1_8d378")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=635152112]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1878888079]
+shape = SubResource("SegmentShape2D_ucit4")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D" unique_id=1848863104]
+shape = SubResource("SegmentShape2D_8d378")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D" unique_id=1298678799]
+shape = SubResource("SegmentShape2D_pkq8o")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=154389221]
+shape = SubResource("SegmentShape2D_ql6y1")

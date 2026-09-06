@@ -3,11 +3,11 @@
 ##type	int	string	string
 ##group			
 ##	index	键	值
-	1	MonsterSurviver	Monster Surviver
-	2	MoveRule	WASD To Move Character
-	3	StartGame	Start
-	4	MainForm.Score	Score:
-	5	MainForm.Timer	Timer:
-	6	SettingForm.Setting	Setting
-	7	SettingForm.Music	Music
-	8	SettingForm.Effect	Effect
+	1	MenuForm.GameName	Monster Surviver
+	2	MenuForm.ExitGame	ExitGame
+	3	MenuForm.StartGame	Start
+	4	MenuForm.Setting	Setting
+	5	SettingForm.Music	Music: 
+	6	SettingForm.Effect	Effect: 
+	7	SettingForm.Language	Language: 
+	8	SettingForm.Close	Close

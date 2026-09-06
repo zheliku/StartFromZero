@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://b61hahuebnqee"]
+
+[ext_resource type="Script" uid="uid://dh3ga80kok5xa" path="res://TheGame/GameScripts/GameProto/UIGe/MainForm.cs" id="1_87v1m"]
+[ext_resource type="Texture2D" uid="uid://s1ky0df67rxb" path="res://TheGame/Sprites/UI/ui_progress_small.png" id="1_sjr3c"]
+[ext_resource type="Texture2D" uid="uid://cqv6avnb2tx1e" path="res://TheGame/Sprites/UI/ui_progress_small_fill.png" id="2_87v1m"]
+
+[node name="MainForm" type="Control" unique_id=1147129491 node_paths=PackedStringArray("m_LevelLabel", "m_TimerLabel", "m_ScoreLabel", "m_HPLabel", "m_HPProgressBar")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_87v1m")
+m_LevelLabel = NodePath("HBoxContainer/m_LevelLabel")
+m_TimerLabel = NodePath("HBoxContainer/m_TimerLabel")
+m_ScoreLabel = NodePath("HBoxContainer/m_ScoreLabel")
+m_HPLabel = NodePath("HBoxContainer2/m_HPProgressBar/m_HPLabel")
+m_HPProgressBar = NodePath("HBoxContainer2/m_HPProgressBar")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=979803768]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 45.0
+grow_horizontal = 2
+theme_override_constants/separation = 500
+alignment = 1
+
+[node name="m_LevelLabel" type="Label" parent="HBoxContainer" unique_id=1344759634]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "关卡：1-1-1"
+
+[node name="m_TimerLabel" type="Label" parent="HBoxContainer" unique_id=924499646]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "计时：30s"
+
+[node name="m_ScoreLabel" type="Label" parent="HBoxContainer" unique_id=982911434]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "分数：120"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1433397347]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -800.0
+offset_top = -48.0
+offset_right = 800.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+alignment = 1
+
+[node name="m_HPProgressBar" type="TextureProgressBar" parent="HBoxContainer2" unique_id=1059246561]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+nine_patch_stretch = true
+stretch_margin_left = 40
+stretch_margin_top = 60
+stretch_margin_right = 40
+texture_under = ExtResource("1_sjr3c")
+texture_progress = ExtResource("2_87v1m")
+
+[node name="m_HPLabel" type="Label" parent="HBoxContainer2/m_HPProgressBar" unique_id=1583090977]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "HP:100/100"
+horizontal_alignment = 1
+vertical_alignment = 1
