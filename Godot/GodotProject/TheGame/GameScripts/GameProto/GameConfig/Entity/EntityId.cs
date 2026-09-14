@@ -14,21 +14,9 @@ namespace GameConfig.Entity
     public enum EntityId
     {
         /// <summary>
-        /// 猫猫
+        /// 角色
         /// </summary>
-        Cat = 0,
-        /// <summary>
-        /// 感叹号
-        /// </summary>
-        GanTan = 1,
-        /// <summary>
-        /// 愤怒
-        /// </summary>
-        Anger = 2,
-        /// <summary>
-        /// 闪电球
-        /// </summary>
-        LightningBall = 3,
+        Wizard = 0,
     }
 
 } 

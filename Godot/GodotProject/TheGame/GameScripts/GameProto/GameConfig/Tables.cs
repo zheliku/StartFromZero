@@ -15,11 +15,15 @@ public partial class Tables
 {
     public UI.TbUIFormConfig TbUIFormConfig {get; }
     public Entity.TbEntityConfig TbEntityConfig {get; }
+    public Scene.TbSceneConfig TbSceneConfig {get; }
+    public Actor.TbActorConfig TbActorConfig {get; }
 
     public Tables(System.Func<string, ByteBuf> loader)
     {
         TbUIFormConfig = new UI.TbUIFormConfig(loader("ui_tbuiformconfig"));
         TbEntityConfig = new Entity.TbEntityConfig(loader("entity_tbentityconfig"));
+        TbSceneConfig = new Scene.TbSceneConfig(loader("scene_tbsceneconfig"));
+        TbActorConfig = new Actor.TbActorConfig(loader("actor_tbactorconfig"));
         ResolveRef();
     }
     
@@ -27,6 +31,8 @@ public partial class Tables
     {
         TbUIFormConfig.ResolveRef(this);
         TbEntityConfig.ResolveRef(this);
+        TbSceneConfig.ResolveRef(this);
+        TbActorConfig.ResolveRef(this);
     }
 }
 

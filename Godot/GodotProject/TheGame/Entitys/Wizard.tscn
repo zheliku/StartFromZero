@@ -1,0 +1,202 @@
+[gd_scene format=3 uid="uid://t4i8dlxdfv3a"]
+
+[ext_resource type="Texture2D" uid="uid://dq5owq60x0y4e" path="res://TheGame/Sprites/Characters/Player/wizard_idle.png" id="1_7xnlv"]
+[ext_resource type="Script" uid="uid://c6tem5tiscwjv" path="res://TheGame/GameScripts/GameProto/EntityGe/Wizard.cs" id="1_jadu7"]
+[ext_resource type="Texture2D" uid="uid://ovmpakcrj1cs" path="res://TheGame/Sprites/Characters/Player/wizard_defeat.png" id="2_vhslw"]
+[ext_resource type="Texture2D" uid="uid://ckyk7jjhg3yb6" path="res://TheGame/Sprites/Characters/Player/wizard_walk_new.png" id="4_2hr0r"]
+
+[sub_resource type="Animation" id="Animation_jadu7"]
+resource_name = "Defeat"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("m_Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_vhslw")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("m_Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("m_Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_vhslw"]
+resource_name = "Idle"
+length = 0.39999999999999997
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("m_Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_7xnlv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("m_Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("m_Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_lqick"]
+resource_name = "Move"
+length = 0.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("m_Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_2hr0r")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("m_Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("m_Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_7xnlv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("m_Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_7xnlv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("m_Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("m_Sprite2D:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jadu7"]
+_data = {
+&"Defeat": SubResource("Animation_jadu7"),
+&"Idle": SubResource("Animation_vhslw"),
+&"Move": SubResource("Animation_lqick"),
+&"RESET": SubResource("Animation_7xnlv")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ucit4"]
+size = Vector2(272, 493)
+
+[node name="Wizard" type="CharacterBody2D" unique_id=1944120121 node_paths=PackedStringArray("m_AnimationPlayer", "m_Sprite2D", "m_CollisionShape2D")]
+script = ExtResource("1_jadu7")
+m_AnimationPlayer = NodePath("m_AnimationPlayer")
+m_Sprite2D = NodePath("m_Sprite2D")
+m_CollisionShape2D = NodePath("m_CollisionShape2D")
+
+[node name="m_AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1195822206]
+libraries/ = SubResource("AnimationLibrary_jadu7")
+autoplay = &"Idle"
+
+[node name="m_Sprite2D" type="Sprite2D" parent="." unique_id=250747112]
+texture = ExtResource("1_7xnlv")
+hframes = 4
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2058037063]
+zoom = Vector2(0.38, 0.38)
+
+[node name="m_CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1179490764]
+position = Vector2(-21, -4.5)
+shape = SubResource("RectangleShape2D_ucit4")

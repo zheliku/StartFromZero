@@ -62,7 +62,7 @@ namespace GameLogic
 			Visible = true;
 			#endregion
             
-			GF.Scene.LoadScene(ResourcesCollectionConstant.Scenes_LevelMap_1);
+			LevelManager.Instance.StartLevel("1-1");
 		}
 
 		/// <summary>
