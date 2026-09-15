@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using GameConfig.Scene;
 using GameLogic;
 using GodotGameFramework;
@@ -14,9 +15,9 @@ public partial class LevelManager : SingletonNode<LevelManager>
 
 	private SceneConfig m_CurrentSceneConfig;
     
-    private Wizard m_Wizard;
+    public Wizard Wizard { get; private set; }
 
-	public async void StartLevel(string level)
+	public async Task StartLevel(string level)
 	{
 		m_CurrentSceneConfig = m_SceneConfig.DataList.FirstOrDefault(x => x.Level == level);
 		if (m_CurrentSceneConfig == null)
@@ -25,7 +26,7 @@ public partial class LevelManager : SingletonNode<LevelManager>
 			return;
 		}
         
-        m_Wizard = await GF.Entity.ShowEntityAsync<Wizard>(EntityId.Wizard);
+        Wizard = await GF.Entity.ShowEntityAsync<Wizard>(EntityId.Wizard);
 
 		GF.Scene.LoadScene(m_CurrentSceneConfig.AssetPath);
 	}

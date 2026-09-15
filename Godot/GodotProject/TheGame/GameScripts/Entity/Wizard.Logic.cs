@@ -6,11 +6,67 @@ using GameFramework.Entity;
 using System.Linq;
 using GameConfig.Entity;
 using GameConfig.Actor;
+using GameFramework.Event;
 using GameFramework.Fsm;
 using GodotGameFramework;
 
 namespace GameLogic
 {
+    public class ActorData
+	{
+        public bool IsPlayer { get; set; }
+        
+		public float MaxHp { get; set; }
+
+		public float CurHp
+		{
+			get;
+			set
+			{
+				field = Mathf.Clamp(value, 0, MaxHp);
+				if (value <= 0)
+				{
+                    // todo: 触发死亡事件
+				}
+				GF.Event.Fire(this, OnActorDataChangeEventArgs.Create(this));
+			}
+		}
+
+		public float MaxAttack { get; set; }
+		public float CurAttack { get; set; }
+		public float MaxAttackRange { get; set; }
+		public float CurAttackRange { get; set; }
+
+		public ActorData(ActorConfig config, bool isPlayer)
+		{
+			IsPlayer = isPlayer;
+			CurHp = MaxHp = config.Hp;
+			MaxAttack = CurAttack = config.Attack;
+			MaxAttackRange = CurAttackRange = config.AttackRange;
+		}
+	}
+    
+    public class OnActorDataChangeEventArgs : GameEventArgs
+	{
+		public static readonly int EventId = typeof(OnActorDataChangeEventArgs).GetHashCode();
+
+		public override int Id => EventId;
+
+		public ActorData ActorData { get; private set; }
+
+		public static OnActorDataChangeEventArgs Create(ActorData actorData)
+		{
+			var eventArgs = new OnActorDataChangeEventArgs();
+			eventArgs.ActorData = actorData;
+			return eventArgs;
+		}
+
+		public override void Clear()
+		{
+			ActorData = null;
+		}
+	}
+    
 	/// <summary>
 	/// 界面逻辑（此文件仅在首次生成时创建，之后不会被覆盖）。
 	/// </summary>
@@ -70,6 +126,8 @@ namespace GameLogic
 
         public AnimationPlayer Anim => m_AnimationPlayer;
 
+        public ActorData ActorData { get; private set; }
+
         /// <summary>
         /// 实体初始化。
         /// </summary>
@@ -91,7 +149,10 @@ namespace GameLogic
 				#region 界面逻辑
 				m_Config = ConfigSystem.Instance.Tables.TbActorConfig.DataList.FirstOrDefault(x => x.EntityId == EntityId.Wizard);
                 m_Fsm = (Fsm<Wizard>)GF.Fsm.CreateFsm<Wizard>(this, new IdleState(), new MoveState());
-				#endregion
+
+                ActorData = new ActorData(m_Config, true);
+
+                #endregion
 			}
 		}
 
@@ -162,10 +223,22 @@ namespace GameLogic
 		/// </summary>
 		public void OnUpdate(float elapseSeconds, float realElapseSeconds)
 		{
-            KeyBoardMove();
+			
 		}
-        
-        private void KeyBoardMove()
+
+		public override void _PhysicsProcess(double delta)
+		{
+			base._PhysicsProcess(delta);
+            KeyBoardMove();
+
+			// 模拟测试扣血
+            if (Input.IsActionJustPressed("ui_accept"))
+            {
+                ActorData.CurHp -= 10;
+            }
+		}
+
+		private void KeyBoardMove()
 		{
 			var inputVec = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
             Velocity = inputVec * m_Config.MoveSpeed;

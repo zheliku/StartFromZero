@@ -19,6 +19,9 @@ public sealed partial class ActorConfig : Luban.BeanBase
         Id = _buf.ReadInt();
         EntityId = (Entity.EntityId)_buf.ReadInt();
         MoveSpeed = _buf.ReadFloat();
+        Hp = _buf.ReadFloat();
+        Attack = _buf.ReadFloat();
+        AttackRange = _buf.ReadFloat();
     }
 
     public static ActorConfig DeserializeActorConfig(ByteBuf _buf)
@@ -38,6 +41,18 @@ public sealed partial class ActorConfig : Luban.BeanBase
     /// 移动速度
     /// </summary>
     public readonly float MoveSpeed;
+    /// <summary>
+    /// 血量
+    /// </summary>
+    public readonly float Hp;
+    /// <summary>
+    /// 攻击力
+    /// </summary>
+    public readonly float Attack;
+    /// <summary>
+    /// 攻击范围
+    /// </summary>
+    public readonly float AttackRange;
    
     public const int __ID__ = 2091716318;
     public override int GetTypeId() => __ID__;
@@ -52,6 +67,9 @@ public sealed partial class ActorConfig : Luban.BeanBase
         + "id:" + Id + ","
         + "EntityId:" + EntityId + ","
         + "MoveSpeed:" + MoveSpeed + ","
+        + "Hp:" + Hp + ","
+        + "Attack:" + Attack + ","
+        + "AttackRange:" + AttackRange + ","
         + "}";
     }
 }

@@ -5,6 +5,8 @@ using System;
 using GodotGameFramework.Localization;
 using GodotGameFramework;
 using GameConfig.Constant;
+using GameFramework.Event;
+
 namespace GameLogic
 {
 	/// <summary>
@@ -56,13 +58,37 @@ namespace GameLogic
 		/// <summary>
 		/// 界面打开。
 		/// </summary>
-		public void OnOpen(object userData)
+		public async void OnOpen(object userData)
 		{
 			#region 框架逻辑
 			Visible = true;
 			#endregion
             
-			LevelManager.Instance.StartLevel("1-1");
+            GF.Event.Subscribe(OnActorDataChangeEventArgs.EventId, OnPlayerDataChange);
+			await LevelManager.Instance.StartLevel("1-1");
+            
+            SyncHpUI(LevelManager.Instance.Wizard.ActorData);
+		}
+
+		private void OnPlayerDataChange(object sender, GameEventArgs e)
+		{
+			var eventArgs = (OnActorDataChangeEventArgs)e;
+            if (eventArgs.ActorData.IsPlayer)
+			{
+				var playerData = eventArgs.ActorData;
+				if (playerData != null)
+				{
+					SyncHpUI(playerData);
+				}
+			}
+		}
+
+		private void SyncHpUI(ActorData playerData)
+		{
+            m_HPProgressBar.MaxValue = playerData.MaxHp;
+			m_HPProgressBar.Value = playerData.CurHp;
+			m_HPLabel.Text = $"{playerData.CurHp}/{playerData.MaxHp}";
+            Log.Info($"SyncHpUI: {playerData.CurHp}/{playerData.MaxHp}");
 		}
 
 		/// <summary>
@@ -73,6 +99,8 @@ namespace GameLogic
 			#region 框架逻辑
 			Visible = false;
 			#endregion
+            
+            GF.Event.Unsubscribe(OnActorDataChangeEventArgs.EventId, OnPlayerDataChange);
 		}
 
 		/// <summary>
