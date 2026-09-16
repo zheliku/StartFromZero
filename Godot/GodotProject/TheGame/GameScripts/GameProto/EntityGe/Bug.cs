@@ -10,7 +10,7 @@ namespace GameLogic
 	/// <summary>
 	/// 实体,生成时会被覆盖，请勿手动修改
 	/// </summary>
-	public partial class Wizard : ActorBase, IEntity
+	public partial class Bug : ActorBase, IEntity
 	{
 		#region Base
 		/// <summary>
@@ -35,11 +35,9 @@ namespace GameLogic
 		#endregion
 
 		[Export]
-		private AnimationPlayer m_AnimationPlayer;
-		[Export]
 		private Sprite2D m_Sprite2D;
 		[Export]
-		private CollisionShape2D m_CollisionShape2D;
+		private AnimationPlayer m_AnimationPlayer;
 
 	}
 }

@@ -17,6 +17,10 @@ namespace GameConfig.Entity
         /// 角色
         /// </summary>
         Wizard = 0,
+        /// <summary>
+        /// 蓝色虫子
+        /// </summary>
+        Bug = 1,
     }
 
 } 

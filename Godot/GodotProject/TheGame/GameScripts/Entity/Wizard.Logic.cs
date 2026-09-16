@@ -5,74 +5,17 @@ using System;
 using GameFramework.Entity;
 using System.Linq;
 using GameConfig.Entity;
-using GameConfig.Actor;
-using GameFramework.Event;
 using GameFramework.Fsm;
 using GodotGameFramework;
 
 namespace GameLogic
 {
-    public class ActorData
-	{
-        public bool IsPlayer { get; set; }
-        
-		public float MaxHp { get; set; }
-
-		public float CurHp
-		{
-			get;
-			set
-			{
-				field = Mathf.Clamp(value, 0, MaxHp);
-				if (value <= 0)
-				{
-                    // todo: 触发死亡事件
-				}
-				GF.Event.Fire(this, OnActorDataChangeEventArgs.Create(this));
-			}
-		}
-
-		public float MaxAttack { get; set; }
-		public float CurAttack { get; set; }
-		public float MaxAttackRange { get; set; }
-		public float CurAttackRange { get; set; }
-
-		public ActorData(ActorConfig config, bool isPlayer)
-		{
-			IsPlayer = isPlayer;
-			CurHp = MaxHp = config.Hp;
-			MaxAttack = CurAttack = config.Attack;
-			MaxAttackRange = CurAttackRange = config.AttackRange;
-		}
-	}
-    
-    public class OnActorDataChangeEventArgs : GameEventArgs
-	{
-		public static readonly int EventId = typeof(OnActorDataChangeEventArgs).GetHashCode();
-
-		public override int Id => EventId;
-
-		public ActorData ActorData { get; private set; }
-
-		public static OnActorDataChangeEventArgs Create(ActorData actorData)
-		{
-			var eventArgs = new OnActorDataChangeEventArgs();
-			eventArgs.ActorData = actorData;
-			return eventArgs;
-		}
-
-		public override void Clear()
-		{
-			ActorData = null;
-		}
-	}
-    
 	/// <summary>
 	/// 界面逻辑（此文件仅在首次生成时创建，之后不会被覆盖）。
 	/// </summary>
 	public partial class Wizard
 	{
-        public class IdleState : FsmState<Wizard>
+		public class IdleState : FsmState<Wizard>
 		{
 			protected internal override void OnInit(IFsm<Wizard> fsm)
 			{
@@ -82,13 +25,13 @@ namespace GameLogic
 			protected internal override void OnEnter(IFsm<Wizard> fsm)
 			{
 				base.OnEnter(fsm);
-                fsm.Owner.Anim.Play("Idle");
+				fsm.Owner.Anim.Play("Idle");
 			}
 
 			protected internal override void OnUpdate(IFsm<Wizard> fsm, float elapseSeconds, float realElapseSeconds)
 			{
 				base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
-                if (fsm.Owner.IsMoving)
+				if (fsm.Owner.IsMoving)
 				{
 					ChangeState<MoveState>(fsm);
 				}
@@ -101,58 +44,67 @@ namespace GameLogic
 			{
 				base.OnInit(fsm);
 			}
-            
-            protected internal override void OnEnter(IFsm<Wizard> fsm)
-            {
-	            base.OnEnter(fsm);
-	            fsm.Owner.Anim.Play("Move");
-            }
+
+			protected internal override void OnEnter(IFsm<Wizard> fsm)
+			{
+				base.OnEnter(fsm);
+				fsm.Owner.Anim.Play("Move");
+			}
 
 			protected internal override void OnUpdate(IFsm<Wizard> fsm, float elapseSeconds, float realElapseSeconds)
 			{
 				base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
-                if (!fsm.Owner.IsMoving)
+				if (!fsm.Owner.IsMoving)
 				{
 					ChangeState<IdleState>(fsm);
 				}
 			}
 		}
 
-		private ActorConfig m_Config;
-        
-        private Fsm<Wizard> m_Fsm;
 
-        public bool IsMoving { get; set; }
+		private Fsm<Wizard> m_Fsm;
 
-        public AnimationPlayer Anim => m_AnimationPlayer;
+		public bool IsMoving { get; set; }
 
-        public ActorData ActorData { get; private set; }
+		public AnimationPlayer Anim => m_AnimationPlayer;
 
-        /// <summary>
-        /// 实体初始化。
-        /// </summary>
-        /// <param name="entityId">实体编号。</param>
-        /// <param name="entityAssetName">实体资源名称。</param>
-        /// <param name="entityGroup">实体所属的实体组。</param>
-        /// <param name="isNewInstance">是否是新实例。</param>
-        /// <param name="userData">用户自定义数据。</param>
-        public void OnInit(int entityId, string entityAssetName, IEntityGroup entityGroup, bool isNewInstance, object userData)
+		private CircleShape2D m_CircleShape2D;
+
+
+		/// <summary>
+		/// 实体初始化。
+		/// </summary>
+		/// <param name="entityId">实体编号。</param>
+		/// <param name="entityAssetName">实体资源名称。</param>
+		/// <param name="entityGroup">实体所属的实体组。</param>
+		/// <param name="isNewInstance">是否是新实例。</param>
+		/// <param name="userData">用户自定义数据。</param>
+		public void OnInit(int entityId, string entityAssetName, IEntityGroup entityGroup, bool isNewInstance,
+			object userData)
 		{
 			#region 框架逻辑
+
 			Id = entityId;
 			EntityAssetName = entityAssetName;
 			Name = GameFramework.Utility.Text.Format("Entity_{0}_{1}", entityId, entityAssetName);
 			EntityGroup = entityGroup;
+
 			#endregion
-			if(isNewInstance)
+
+			if (isNewInstance)
 			{
 				#region 界面逻辑
-				m_Config = ConfigSystem.Instance.Tables.TbActorConfig.DataList.FirstOrDefault(x => x.EntityId == EntityId.Wizard);
-                m_Fsm = (Fsm<Wizard>)GF.Fsm.CreateFsm<Wizard>(this, new IdleState(), new MoveState());
 
-                ActorData = new ActorData(m_Config, true);
+				m_Config = ConfigSystem.Instance.Tables.TbActorConfig.DataList.FirstOrDefault(x =>
+					x.EntityId == EntityId.Wizard);
+				m_Fsm = (Fsm<Wizard>)GF.Fsm.CreateFsm<Wizard>(this, new IdleState(), new MoveState());
 
-                #endregion
+				ActorData = new ActorData(Id, m_Config);
+				m_CircleShape2D = new CircleShape2D();
+				m_CircleShape2D.Radius = m_Config.AttackRange;
+				m_PhysicsCheck = PhysicsCheck2D.Create(this, m_CircleShape2D, LayerMask.LayerToMask2D("Enemy"));
+
+				#endregion
 			}
 		}
 
@@ -174,7 +126,7 @@ namespace GameLogic
 		public void OnShow(object userData)
 		{
 			Visible = true;
-            m_Fsm.Start<IdleState>();
+			m_Fsm.Start<IdleState>();
 		}
 
 		/// <summary>
@@ -190,7 +142,6 @@ namespace GameLogic
 		/// </summary>
 		public void OnAttached(IEntity childEntity, object userData)
 		{
-
 		}
 
 		/// <summary>
@@ -198,7 +149,6 @@ namespace GameLogic
 		/// </summary>
 		public void OnDetached(IEntity childEntity, object userData)
 		{
-
 		}
 
 		/// <summary>
@@ -206,7 +156,6 @@ namespace GameLogic
 		/// </summary>
 		public void OnAttachTo(IEntity parentEntity, object userData)
 		{
-
 		}
 
 		/// <summary>
@@ -214,7 +163,6 @@ namespace GameLogic
 		/// </summary>
 		public void OnDetachFrom(IEntity parentEntity, object userData)
 		{
-
 		}
 
 		/// <summary>
@@ -223,32 +171,47 @@ namespace GameLogic
 		/// </summary>
 		public void OnUpdate(float elapseSeconds, float realElapseSeconds)
 		{
-			
+#if TOOLS
+			QueueRedraw();
+#endif
 		}
 
 		public override void _PhysicsProcess(double delta)
 		{
 			base._PhysicsProcess(delta);
-            KeyBoardMove();
+
+			m_PhysicsCheck.IsColliding();
+            
+			KeyBoardMove();
 
 			// 模拟测试扣血
-            if (Input.IsActionJustPressed("ui_accept"))
-            {
-                ActorData.CurHp -= 10;
-            }
+			if (Input.IsActionJustPressed("ui_accept"))
+			{
+				ActorData.CurHp -= 10;
+			}
 		}
 
 		private void KeyBoardMove()
 		{
 			var inputVec = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-            Velocity = inputVec * m_Config.MoveSpeed;
-            MoveAndSlide();
-            
-            IsMoving = inputVec != Vector2.Zero;
-            if (IsMoving)
+			Velocity = inputVec * m_Config.MoveSpeed;
+			MoveAndSlide();
+
+			IsMoving = inputVec != Vector2.Zero;
+			if (IsMoving)
 			{
 				m_Sprite2D.FlipH = Velocity.X < 0;
 			}
+		}
+
+		public override void _Draw()
+		{
+			base._Draw();
+			if (m_PhysicsCheck != null)
+			{
+                DrawCircle(Vector2.Zero, m_Config.AttackRange, Colors.Red, false);
+			}
+			m_PhysicsCheck.DrawDebugLines();
 		}
 	}
 }

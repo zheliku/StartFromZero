@@ -24,69 +24,71 @@ namespace GameLogic
 		/// <param name="pauseCoveredUIForm">是否暂停被覆盖的界面。</param>
 		/// <param name="isNewInstance">是否是新实例。</param>
 		/// <param name="userData">用户自定义数据。</param>
-		public void OnInit(int serialId, string uiFormAssetName, IUIGroup uiGroup, bool pauseCoveredUIForm, bool isNewInstance, object userData)
+		public void OnInit(int serialId, string uiFormAssetName, IUIGroup uiGroup, bool pauseCoveredUIForm,
+			bool isNewInstance, object userData)
 		{
 			#region 框架逻辑
+
 			m_SerialId = serialId;
 			m_UIFormAssetName = uiFormAssetName;
 			m_UIGroup = uiGroup;
 			m_DepthInUIGroup = 0;
 			m_PauseCoveredUIForm = pauseCoveredUIForm;
 			UIStringKeys.ForEach(key => key.SetLocalizationValue());
+
 			#endregion
-			if(isNewInstance)
+
+			if (isNewInstance)
 			{
 				#region 界面逻辑
+
 				m_StartButton.Pressed += OnStartButtonPressed;
-                m_SettingButton.Pressed += OnSettingButtonPressed;
-                m_ExitButton.Pressed += OnExitButtonPressed;
+				m_SettingButton.Pressed += OnSettingButtonPressed;
+				m_ExitButton.Pressed += OnExitButtonPressed;
+
 				#endregion
 			}
 		}
 
-        private async void OnStartButtonPressed()
+		private async void OnStartButtonPressed()
 		{
-            Log.Info("Start button pressed");
-            GF.Sound.PlayUISound(ResourcesCollectionConstant.Sounds_click);
-            GF.UI.CloseUIForm(this);
-            await GF.UI.OpenLoadingUIFormAsync();
-            try
-            {
-                await GF.UI.OpenUIFormAsync<MainForm>(UIFormId.MainForm);
-            }
-            finally
-            {
-                // 加载遮罩不会自动消失，无论主界面是否打开成功都要收掉，否则永远卡在加载页
-                LoadingForm.Current?.CloseLoading();
-            }
+			Log.Info("Start button pressed");
+			GF.Sound.PlayUISound(ResourcesCollectionConstant.Sounds_click);
+			GF.UI.CloseUIForm(this);
+			await GF.UI.OpenLoadingUIFormAsync();
+			GF.UI.OpenUIForm(UIFormId.MainForm);
+			// 加载遮罩不会自动消失，无论主界面是否打开成功都要收掉，否则永远卡在加载页
+			LoadingForm.Current.CloseLoading();
 		}
 
-        private void OnSettingButtonPressed()
+		private void OnSettingButtonPressed()
 		{
-            Log.Info("Setting button pressed");
-            GF.Sound.PlayUISound(ResourcesCollectionConstant.Sounds_click);
-            GF.UI.OpenUIForm(UIFormId.SettingForm);
+			Log.Info("Setting button pressed");
+			GF.Sound.PlayUISound(ResourcesCollectionConstant.Sounds_click);
+			GF.UI.OpenUIForm(UIFormId.SettingForm);
 		}
 
-        
-        private void OnExitButtonPressed()
+
+		private void OnExitButtonPressed()
 		{
-            Log.Info("Exit button pressed");
-            GF.Sound.PlayUISound(ResourcesCollectionConstant.Sounds_click);
-            GameEntry.Shutdown(ShutdownType.Quit);
+			Log.Info("Exit button pressed");
+			GF.Sound.PlayUISound(ResourcesCollectionConstant.Sounds_click);
+			GameEntry.Shutdown(ShutdownType.Quit);
 		}
 
-        /// <summary>
-        /// 界面回收。
-        ///
-        /// </summary>
-        public void OnRecycle()
+		/// <summary>
+		/// 界面回收。
+		///
+		/// </summary>
+		public void OnRecycle()
 		{
 			#region 框架逻辑
+
 			m_SerialId = 0;
 			m_DepthInUIGroup = 0;
 			m_PauseCoveredUIForm = true;
 			Visible = false;
+
 			#endregion
 		}
 
@@ -96,10 +98,12 @@ namespace GameLogic
 		public void OnOpen(object userData)
 		{
 			#region 框架逻辑
+
 			Visible = true;
+
 			#endregion
-            
-            GF.Sound.PlayBGM(ResourcesCollectionConstant.Music_Menu);
+
+			GF.Sound.PlayBGM(ResourcesCollectionConstant.Music_Menu);
 		}
 
 		/// <summary>
@@ -108,7 +112,9 @@ namespace GameLogic
 		public void OnClose(bool isShutdown, object userData)
 		{
 			#region 框架逻辑
+
 			Visible = false;
+
 			#endregion
 		}
 
@@ -117,7 +123,6 @@ namespace GameLogic
 		/// </summary>
 		public void OnPause()
 		{
-
 		}
 
 		/// <summary>
@@ -125,7 +130,6 @@ namespace GameLogic
 		/// </summary>
 		public void OnResume()
 		{
-
 		}
 
 		/// <summary>
@@ -133,7 +137,6 @@ namespace GameLogic
 		/// </summary>
 		public void OnCover()
 		{
-
 		}
 
 		/// <summary>
@@ -141,7 +144,6 @@ namespace GameLogic
 		/// </summary>
 		public void OnReveal()
 		{
-
 		}
 
 		/// <summary>
@@ -149,7 +151,6 @@ namespace GameLogic
 		/// </summary>
 		public void OnRefocus(object userData)
 		{
-
 		}
 
 		/// <summary>
@@ -157,7 +158,6 @@ namespace GameLogic
 		/// </summary>
 		public void OnUpdate(float elapseSeconds, float realElapseSeconds)
 		{
-
 		}
 
 		/// <summary>
@@ -166,7 +166,9 @@ namespace GameLogic
 		public void OnDepthChanged(int uiGroupDepth, int depthInUIGroup)
 		{
 			#region 框架逻辑
+
 			m_DepthInUIGroup = depthInUIGroup;
+
 			#endregion
 		}
 	}

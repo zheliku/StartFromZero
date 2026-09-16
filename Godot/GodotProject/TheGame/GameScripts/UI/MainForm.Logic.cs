@@ -73,7 +73,7 @@ namespace GameLogic
 		private void OnPlayerDataChange(object sender, GameEventArgs e)
 		{
 			var eventArgs = (OnActorDataChangeEventArgs)e;
-            if (eventArgs.ActorData.IsPlayer)
+            if (eventArgs.ActorData.ActorId == LevelManager.Instance.Wizard.ActorData.ActorId)
 			{
 				var playerData = eventArgs.ActorData;
 				if (playerData != null)

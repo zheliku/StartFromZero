@@ -17,6 +17,8 @@ public partial class LevelManager : SingletonNode<LevelManager>
     
     public Wizard Wizard { get; private set; }
 
+    private Node m_CurLevelMap;
+
 	public async Task StartLevel(string level)
 	{
 		m_CurrentSceneConfig = m_SceneConfig.DataList.FirstOrDefault(x => x.Level == level);
@@ -28,6 +30,9 @@ public partial class LevelManager : SingletonNode<LevelManager>
         
         Wizard = await GF.Entity.ShowEntityAsync<Wizard>(EntityId.Wizard);
 
-		GF.Scene.LoadScene(m_CurrentSceneConfig.AssetPath);
+		m_CurLevelMap = await GF.Scene.LoadSceneAsync(m_CurrentSceneConfig.AssetPath);
+        var sp = m_CurLevelMap.GetNode<Node2D>("EnemySpawn");
+        var bug = await GF.Entity.ShowEntityAsync<Bug>(EntityId.Bug);
+        bug.Position = sp.Position;
 	}
 }
